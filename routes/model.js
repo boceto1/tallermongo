@@ -1,13 +1,15 @@
 const express = require('express')
 const api = express.Router()
 
-const { getAllModels,getModelById,createModel } = require ('../operations/API/model.api');
+const { getAllModels, postModel, getModelById } = require ('../operations/API/model.api');
 
 api.route('')
     .get(getAllModels)
-    .post(createModel);
+    .post(postModel);
 
 api.route('/:id')
-    .get(getModelById);
+    .get(getModelById)
+
+
 
 module.exports = api;

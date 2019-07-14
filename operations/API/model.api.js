@@ -1,12 +1,13 @@
-const { createModel, findModelById, getAllModels}  = require('../DB/model.db');
+const { createModel, findModelById, findAllModels}  = require('../DB/model.db');
 
-export const getAllModels = async (req,res) => {
-    const models = await getAllModels();
-    res.status(200).json(models);
-}
+const getAllModels= async (req,res) => {
+
+    const foundModels = await findAllModels();
+    res.status(200).json(foundModels);
+};
 
 
-export const createModel = async (req,res) => {
+const postModel = async (req,res) => {
     const model = req.body;
 
     const createdModel = await createModel(model);
@@ -16,10 +17,10 @@ export const createModel = async (req,res) => {
         return;
     }
 
-    res.status(200).json(createModel);
+    res.status(200).json(createdModel);
 }
 
-export const getModelById = async (req,res) => {
+const getModelById = async (req,res) => {
     
     const id = req.params.id;
 
@@ -29,7 +30,12 @@ export const getModelById = async (req,res) => {
         res.status(404).json({error:"Model not found"});
         return;
     }
-
     res.status(200).json(foundModel);
+}
 
+
+module.exports = {
+    getAllModels,
+    postModel,
+    getModelById
 }

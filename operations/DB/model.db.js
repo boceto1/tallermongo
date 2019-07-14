@@ -1,12 +1,18 @@
-const MODEL = require('../../models/model');
+const MODEL = require('../../models/model.model');
 
 
-export const createModel = async (model) => {
+const createModel = async (model) => {
     const createdModel = new MODEL(model);
     const resposeCreateModel = await createdModel.save();
     return resposeCreateModel;
 };
 
-export const findModelById = async (id)=> MODEL.findById(id);
+const findModelById = async (id)=> MODEL.findById(id);
 
-export const getAllModels = async () => MODEL.find();
+const findAllModels = async () => MODEL.find();
+
+module.exports = {
+    createModel,
+    findModelById,
+    findAllModels
+}

@@ -1,11 +1,11 @@
 const express = require('express')
 const api = express.Router()
 
-const { getAllBrands, createBrand, getBrandById} = require ('../operations/API/brand.api');
+const { getAllBrands, postBrand, getBrandById } = require ('../operations/API/brand.api');
 
 api.route('')
     .get(getAllBrands)
-    .post(createBrand);
+    .post(postBrand);
 
 api.route('/:id')
     .get(getBrandById);
