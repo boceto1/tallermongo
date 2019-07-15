@@ -7,12 +7,15 @@ const createBrand = async (brand) => {
     return resposeCreatedBrand;
 };
 
-const findBrandById = async (id)=> BRAND.findById(id);
+const findBrandById = async (id) => BRAND.findById(id);
+
+const findBrandsByName = async (name) => BRAND.find({name});
 
 const findAllBrands = async () => BRAND.find();
 
 module.exports = {
     createBrand,
     findBrandById,
+    findBrandsByName,
     findAllBrands
 }

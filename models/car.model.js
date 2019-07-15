@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const {Schema} = mongoose;
 
 const OwnerSchema = new mongoose.Schema ({
     dni:{type: String},
@@ -6,7 +7,7 @@ const OwnerSchema = new mongoose.Schema ({
     date:{type: Date}
 }); 
 
-const BrandSchema = new mongoose.Schema (
+const CarSchema = new mongoose.Schema (
   {
     plate:{ type: String, unique: true,required: true },
     brand:{ type: Schema.Types.ObjectId, ref: 'Brand'},
@@ -17,4 +18,4 @@ const BrandSchema = new mongoose.Schema (
 }
 );
 
-module.exports= mongoose.model('Model',BrandSchema);
+module.exports= mongoose.model('CAR',CarSchema);

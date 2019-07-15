@@ -1,10 +1,17 @@
-/*const express = require('express');
+const express = require('express');
 const api = express.Router();
 
-const { getAllCars, getBrandById,changeOwner,getAllCarsByBrands,getAllCarsByModels} = require ('../operations/API/car.api');
+const { 
+    postCar,
+    getAllCars, 
+    getBrandById, 
+    changeOwner, 
+    getAllCarsByBrands,
+    getAllCarsByModels} = require ('../operations/API/car.api');
 
 api.route('')
-    .get(getAllCars)
+    .post(postCar)
+    .get(getAllCars);
 
 api.route('/:id')
     .get(getBrandById)
@@ -17,4 +24,4 @@ api.route('/brands/:nameBrand')
 api.route('/models/:nameModel')
     .get(getAllCarsByModels);
 
-module.exports = api;*/
+module.exports = api;

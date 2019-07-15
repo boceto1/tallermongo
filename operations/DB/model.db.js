@@ -7,12 +7,15 @@ const createModel = async (model) => {
     return resposeCreateModel;
 };
 
-const findModelById = async (id)=> MODEL.findById(id);
+const findModelById = async (id) => MODEL.findById(id);
+
+const findModelByName = async (name) => MODEL.find({name}); 
 
 const findAllModels = async () => MODEL.find();
 
 module.exports = {
     createModel,
     findModelById,
+    findModelByName,
     findAllModels
 }
