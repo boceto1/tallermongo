@@ -25,7 +25,7 @@ const getBrandById = async (req, res) => {
         const foundBrand = await findBrandById(id);
         
         if(!foundBrand){
-            res.status(404).json({bran:foundBrand});
+            res.status(404).json({brand:foundBrand});
             return;
         }
         res.status(200).json({brand:foundBrand});

@@ -43,12 +43,40 @@ const getAllCars = async (req, res) => {
     res.status(200).json({cars:filteredCars});
 };
 
-const getBrandById = async (req, res) => {
-    res.send("Works well");
+const getCarById = async (req, res) => {
+
+
+    try {
+        const plate = req.body.plate;
+        const foundCar = await CAR.findCarById(plate);
+        
+        if(!foundCar){
+            res.status(404).json({car:foundCar});
+            return;
+        }
+        res.status(200).json({car:foundCar});
+
+    } catch (error) {
+        res.status(500).json({error});    
+    }
 };
 
 const changeOwner = async (req, res) => {
-    res.send("Works well");
+    const car = req.body;
+    try {
+        const plate = req.params.plate;
+        const foundCar = await CAR.findCarById(plate);
+        if(!foundCar){
+            res.status(404).json({car:foundCar});
+            return;
+        }
+        const changeOwnerCar = await CAR.changeOwnerCar(car);
+        res.status(200).json({car:changeOwnerCar});
+
+    } catch (error) {
+        res.status(500).json({error});    
+    }
+
 };
 
 const getAllCarsByBrands = async (req, res) => {
@@ -76,6 +104,10 @@ const getAllCarsByModels = async (req, res) => {
         return;
     }
 
+    const foundCar = await CAR.findCarByModel(nameModel);
+
+    res.status(200).json({car:foundCar});
+
     res.send("Works well");
 };
 
@@ -83,7 +115,7 @@ const getAllCarsByModels = async (req, res) => {
 module.exports = {
     postCar,
     getAllCars,
-    getBrandById,
+    getCarById,
     changeOwner,
     getAllCarsByBrands,
     getAllCarsByModels

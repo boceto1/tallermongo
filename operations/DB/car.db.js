@@ -9,10 +9,21 @@ const createCar = async (car) => {
 
 const findAllCars = async () => CAR.find();
 
+const findCarById = async (plate) => CAR.findById(plate);
+
 const findCarByBrand = async (idBrand) => CAR.findById({brand:idBrand});
+
+const findCarByModel = async (idModel) => CAR.findById({brand:idModel});
+
+const changeOwnerCar = async (car) => {
+    CAR.updateOne({ plate:car.plate}, {$set: { owner: car.owner}});
+}
 
 module.exports = {
     createCar,
     findAllCars,
+    findCarById,
+    changeOwnerCar,
+    findCarByModel,
     findCarByBrand
 };
