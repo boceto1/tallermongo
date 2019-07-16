@@ -14,7 +14,6 @@ const postModel = async (req,res) => {
 
     try {
         const foundBrand = await findBrandById(idBrand);
-        console.log("asd",foundBrand);
 
         if(!foundBrand){
             res.status(404).json({error:"Brand not exist"});
