@@ -62,9 +62,12 @@ const getCarById = async (req, res) => {
 
 const changeOwner = async (req, res) => {
     const car = req.body;
+    
+    console.log(car);
     try {
-        const plate = req.params.plate;
-        const foundCar = await CAR.findCarById(plate);
+        const id = car._id;
+        const foundCar = await CAR.findCarById(id);
+        console.log(foundCar);
         if(!foundCar){
             res.status(404).json({car:foundCar});
             return;
