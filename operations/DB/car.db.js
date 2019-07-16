@@ -9,11 +9,11 @@ const createCar = async (car) => {
 
 const findAllCars = async () => CAR.find();
 
-const findCarById = async (idCar) => CAR.findById({id:idCar});
+const findCarById = async (id) => CAR.findById(id);
 
-const findCarByBrand = async (idBrand) => CAR.find({brand:idBrand});
+const findCarByBrand = async (foundBrand) => CAR.find({brand:foundBrand});
 
-const findCarByModel = async (idModel) => CAR.find({brand:idModel});
+const findCarByModel = async (foundModel) => CAR.find({model:foundModel});
 
 const changeOwnerCar = async (car) => {
     CAR.updateOne({ plate:car.plate}, {$set: { owner: car.owner}});

@@ -18,10 +18,10 @@ api.route('/:id')
     .put(changeOwner);
 
 
-/*api.route('/brands/:nameBrand')
+api.route('/brands/:nameBrand')
     .get(getAllCarsByBrands);
 
 api.route('/models/:nameModel')
-    .get(getAllCarsByModels);*/
+    .get(getAllCarsByModels);
 
 module.exports = api;
