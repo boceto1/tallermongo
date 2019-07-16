@@ -50,7 +50,7 @@ const getCarById = async (req, res) => {
         const foundCar = await CAR.findCarById(id);
         
         if(!foundCar){
-            res.status(404).json({car:foundCar});
+            res.status(404).json({err:"The car doesn't exist"});
             return;
         }
         res.status(200).json({car:foundCar});
@@ -61,15 +61,17 @@ const getCarById = async (req, res) => {
 };
 
 const changeOwner = async (req, res) => {
-    const car = req.body;
+    const owner = req.body;
+    console.log(owner);
     try {
-        const plate = req.params.plate;
-        const foundCar = await CAR.findCarById(plate);
+        const id = req.params.id;
+        const foundCar = await CAR.findCarById(id);
         if(!foundCar){
             res.status(404).json({car:foundCar});
             return;
         }
-        const changeOwnerCar = await CAR.changeOwnerCar(car);
+        const changeOwnerCar = await CAR.changeOwnerCar(id, owner);
+
         res.status(200).json({car:changeOwnerCar});
 
     } catch (error) {
@@ -100,7 +102,7 @@ const getAllCarsByModels = async (req, res) => {
 
     const foundModel = await MODEL.findModelByName(nameModel);
 
-    if(!foundModel){
+    if(!foundModel || foundModel.length!==0){
         res.status(404).json({err:"The model doesn't exist"});
         return;
     }

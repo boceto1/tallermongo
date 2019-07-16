@@ -15,9 +15,8 @@ const findCarByBrand = async (foundBrand) => CAR.find({brand:foundBrand});
 
 const findCarByModel = async (foundModel) => CAR.find({model:foundModel});
 
-const changeOwnerCar = async (car) => {
-    CAR.updateOne({ plate:car.plate}, {$set: { owner: car.owner}});
-}
+const changeOwnerCar = async (id,owner) => CAR.findByIdAndUpdate(id,{owner}, {new: true});;
+
 
 module.exports = {
     createCar,
