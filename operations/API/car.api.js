@@ -45,10 +45,9 @@ const getAllCars = async (req, res) => {
 
 const getCarById = async (req, res) => {
 
-
     try {
-        const plate = req.body.plate;
-        const foundCar = await CAR.findCarById(plate);
+        const id = req.params.id;
+        const foundCar = await CAR.findCarById(id);
         
         if(!foundCar){
             res.status(404).json({car:foundCar});
@@ -108,7 +107,6 @@ const getAllCarsByModels = async (req, res) => {
 
     res.status(200).json({car:foundCar});
 
-    res.send("Works well");
 };
 
 
