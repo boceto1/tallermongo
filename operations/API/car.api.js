@@ -66,7 +66,7 @@ const changeOwner = async (req, res) => {
     try {
         const id = req.params.id;
         const foundCar = await CAR.findCarById(id);
-        if(!foundCar){
+      if(!foundCar){
             res.status(404).json({car:foundCar});
             return;
         }
