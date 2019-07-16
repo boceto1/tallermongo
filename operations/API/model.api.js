@@ -1,4 +1,5 @@
 const { createModel, findModelById, findAllModels}  = require('../DB/model.db');
+const { findBrandById } = require('../DB/brand.db');
 
 const getAllModels= async (req,res) => {
 
@@ -9,15 +10,31 @@ const getAllModels= async (req,res) => {
 
 const postModel = async (req,res) => {
     const model = req.body;
+    const idBrand = model.codeBrand;
 
-    const createdModel = await createModel(model);
+    try {
+        const foundBrand = await findBrandById(idBrand);
+        console.log("asd",foundBrand);
 
-    if(!createdModel){
-        res.status(500).json({error:"Problems to create model"});
-        return;
+        if(!foundBrand){
+            res.status(404).json({error:"Brand not exist"});
+            return;
+        }
+
+        const createdModel = await createModel(model);
+
+        if(!createdModel){
+            res.status(500).json({error:"Problems to create model"});
+            return;
+        }
+
+        res.status(200).json(createdModel);
+
+
+    } catch (error) {
+        res.status(400).json({error});
     }
-
-    res.status(200).json(createdModel);
+        
 }
 
 const getModelById = async (req,res) => {
