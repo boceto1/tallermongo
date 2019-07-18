@@ -9,6 +9,8 @@ const createBrand = async (brand) => {
 
 const findBrandById = async (id) => BRAND.findById(id);
 
+const findBrandByCode = async (codeBrand) => BRAND.find({codeBrand});
+
 const findBrandsByName = async (name) => BRAND.find({name});
 
 const findAllBrands = async () => BRAND.find();
@@ -17,5 +19,6 @@ module.exports = {
     createBrand,
     findBrandById,
     findBrandsByName,
-    findAllBrands
+    findAllBrands,
+    findBrandByCode
 }

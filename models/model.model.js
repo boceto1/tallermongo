@@ -4,7 +4,7 @@ const {Schema} = mongoose;
 const ModelSchema = new mongoose.Schema (
   {
     code:{ type: String, unique: true,required: true },
-    codeBrand:{ type: Schema.Types.ObjectId, ref: 'Brand'},
+    codeBrand:{ type: String, required:true },
     name:{type:String, required: true,uppercase: true }
   }
 )

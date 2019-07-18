@@ -2,12 +2,20 @@ const  BRAND = require ('../DB/brand.db');
 const  MODEL = require ('../DB/model.db');
 const CAR = require('../DB/car.db');
 
-const { cars_Owner_Age_Greater_Than } = require('../VALIDATORS/car.validators')
+const { cars_Owner_Age_Greater_Than, validateInputs } = require('../VALIDATORS/car.validators')
 
 const postCar = async (req, res) => {
+
     const car = req.body;
     const nameBrand = car.brand;
     const model = car.model;
+
+    const resultValidate = await validateInputs(car);
+    
+    if(!resultValidate){
+        res.status(400).json({err:"Inputs are incorrect"});
+        return;
+    }
 
     const foundBrand = await  BRAND.findBrandsByName(nameBrand); 
 
@@ -26,10 +34,14 @@ const postCar = async (req, res) => {
     }
 
     car.model = foundModel[0]._id;
+    
+    try {
+        const createdCar = await CAR.createCar(car);
+        res.status(200).json({newCar:createdCar});
+    } catch (error) {
+        res.status(400).json({error});  
+    }
 
-    const createdCar = await CAR.createCar(car);
-
-    res.status(200).json({newCar:createdCar});
 }
 
 const getAllCars = async (req, res) => {
@@ -47,7 +59,7 @@ const getCarById = async (req, res) => {
 
     try {
         const id = req.params.id;
-        const foundCar = await CAR.findCarById(id);
+        const foundCar = await CAR.findCarByPlate(id);
         
         if(!foundCar){
             res.status(404).json({err:"The car doesn't exist"});
@@ -62,17 +74,22 @@ const getCarById = async (req, res) => {
 
 const changeOwner = async (req, res) => {
     const owner = req.body;
-    console.log(owner);
-    try {
-        const id = req.params.id;
-        const foundCar = await CAR.findCarById(id);
-      if(!foundCar){
-            res.status(404).json({car:foundCar});
-            return;
-        }
-        const changeOwnerCar = await CAR.changeOwnerCar(id, owner);
 
-        res.status(200).json({car:changeOwnerCar});
+    const id = req.params.id;
+    try {
+
+    const foundCar = await CAR.findCarByPlate(id);
+
+    if(!foundCar){
+        res.status(404).json({err:"The car doesn't exist"});
+        return;
+    }
+
+    foundCar.owner = owner;
+
+    const changeOwnerCar = await CAR.changeOwnerCar(foundCar._id, foundCar);
+
+    res.status(200).json({car:changeOwnerCar});
 
     } catch (error) {
         res.status(500).json({error});    
@@ -98,16 +115,25 @@ const getAllCarsByBrands = async (req, res) => {
 };
 
 const getAllCarsByModels = async (req, res) => {
+
     const nameModel = req.params.nameModel;
+
 
     const foundModel = await MODEL.findModelByName(nameModel);
 
-    if(!foundModel || foundModel.length!==0){
+    console.log(foundModel);
+
+    if(!foundModel || foundModel.length!==1){
         res.status(404).json({err:"The model doesn't exist"});
         return;
     }
 
     const foundCar = await CAR.findCarByModel(foundModel);
+
+    if(foundCar.length===0){
+        res.status(404).json({err:"The are any car with this model"});
+        return;
+    }
 
     res.status(200).json({car:foundCar});
 

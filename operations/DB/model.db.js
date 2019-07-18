@@ -9,6 +9,8 @@ const createModel = async (model) => {
 
 const findModelById = async (id) => MODEL.findById(id);
 
+const findModelByCode = async (code) => MODEL.findOne({code});
+
 const findModelByName = async (name) => MODEL.find({name}); 
 
 const findAllModels = async () => MODEL.find();
@@ -17,5 +19,6 @@ module.exports = {
     createModel,
     findModelById,
     findModelByName,
-    findAllModels
+    findAllModels,
+    findModelByCode
 }

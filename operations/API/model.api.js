@@ -1,5 +1,5 @@
-const { createModel, findModelById, findAllModels}  = require('../DB/model.db');
-const { findBrandById } = require('../DB/brand.db');
+const { createModel, findModelByCode , findAllModels}  = require('../DB/model.db');
+const { findBrandByCode } = require('../DB/brand.db');
 
 const getAllModels= async (req,res) => {
 
@@ -13,9 +13,9 @@ const postModel = async (req,res) => {
     const idBrand = model.codeBrand;
 
     try {
-        const foundBrand = await findBrandById(idBrand);
+        const foundBrand = await findBrandByCode(idBrand);
 
-        if(!foundBrand){
+        if(!foundBrand || foundBrand.length!==1){
             res.status(404).json({error:"Brand not exist"});
             return;
         }
@@ -40,7 +40,7 @@ const getModelById = async (req,res) => {
     
     const id = req.params.id;
 
-    const foundModel = await findModelById(id);
+    const foundModel = await findModelByCode(id);
 
     if(!foundModel){
         res.status(404).json({error:"Model not found"});

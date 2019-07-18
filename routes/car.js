@@ -11,12 +11,12 @@ const {
 
 api.route('')
     .post(postCar)
-    .put(changeOwner)
     .get(getAllCars);
 
 
 api.route('/:id')
     .get(getCarById)
+    .put(changeOwner);
     
 api.route('/brands/:nameBrand')
     .get(getAllCarsByBrands);
